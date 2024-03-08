@@ -35,7 +35,7 @@ public class ClientPanel extends JPanel {
         g.setColor(new Color(73, 103, 101));
         g.fillRect(0, 0, 1200, 800);
         g.setColor(new Color(59, 71, 79));
-        g.fillRect(20, 43, 718, 517);
-        g.fillRect(760, 43, 268, 517);
+        g.fillRect(30, 43, 718, 517);
+        g.fillRect(770, 43, 268, 517);
     }
 }
