@@ -11,10 +11,13 @@ public class CommandFromServer implements Serializable {
     public static final int NEWMESSAGE = 1;
 
 
-    public CommandFromServer(int command, String data, ArrayList<String> arrayList) {
+    public CommandFromServer(int command, ArrayList<String> arrayList) {
+        this.command = command;
+        this.usernames = arrayList;
+    }
+    public CommandFromServer(int command, String data) {
         this.command = command;
         this.data = data;
-        this.usernames = arrayList;
     }
 
     public int getCommand() {
