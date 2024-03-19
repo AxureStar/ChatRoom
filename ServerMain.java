@@ -13,7 +13,8 @@ public class ServerMain {
                 Socket person = ss.accept();
                 ObjectOutputStream os = new ObjectOutputStream(person.getOutputStream());
                 ObjectInputStream is = new ObjectInputStream(person.getInputStream());
-                System.out.println("Person " + number + " joined");
+                CommandFromClient user = (CommandFromClient) is.readObject();
+                System.out.println(user.getData() + " joined");
                 ServerListener serverListener = new ServerListener(os, is, "");
                 Thread a = new Thread(serverListener);
             }
