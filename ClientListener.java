@@ -32,6 +32,11 @@ public class ClientListener implements Runnable{
                 if(cfs.getCommand() == CommandFromServer.GETUSERS)//updates users
                 {
                     usernames = cfs.getUsernames();
+
+                    for(String a : usernames)
+                    {
+                        System.out.println(a);
+                    }
                 }
             }
         }
@@ -40,6 +45,5 @@ public class ClientListener implements Runnable{
             e.printStackTrace();
         }
     }
-
 
 }

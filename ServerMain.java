@@ -7,19 +7,14 @@ import java.util.ArrayList;
 public class ServerMain {
     public static void main(String[] args){
         try{
-            ServerSocket ss = new ServerSocket(8010);
-            ArrayList<String> users = new ArrayList<>();
-            int number = 0;
+            ServerSocket ss = new ServerSocket(8015);
             while(true){
-                number++;
                 Socket person = ss.accept();
                 ObjectOutputStream os = new ObjectOutputStream(person.getOutputStream());
                 ObjectInputStream is = new ObjectInputStream(person.getInputStream());
-                CommandFromClient user = (CommandFromClient) is.readObject();
-                System.out.println(user.getData() + " joined");
-                users.add(user.getData());
-                ServerListener serverListener = new ServerListener(os, is, users);
+                ServerListener serverListener = new ServerListener(is, os);
                 Thread a = new Thread(serverListener);
+                a.start();
             }
 
         }catch(Exception e){

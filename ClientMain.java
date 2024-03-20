@@ -7,14 +7,14 @@ import java.util.Scanner;
 public class ClientMain {
     public static void main(String[] args){
         try{
-            Socket socket = new Socket("127.0.0.1", 8010);
+            Socket socket = new Socket("127.0.0.1", 8015);
             ObjectInputStream is = new ObjectInputStream(socket.getInputStream());
             ObjectOutputStream os = new ObjectOutputStream(socket.getOutputStream());
 
             GUI gui = new GUI();
             ClientListener cl = new ClientListener(is, os, gui);
             Thread t = new Thread(cl);
-            ArrayList<String> users = (ArrayList<String>) is.readObject();
+            t.start();
 
             Scanner sc = new Scanner(System.in);
             System.out.print("Enter Username - ");
