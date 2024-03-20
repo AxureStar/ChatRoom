@@ -25,6 +25,7 @@ public class ServerListener implements Runnable{
                 usernames.add(cfc.getData());
                 System.out.println(cfc.getData() + " just joined so say hello mates.");
                 os.writeObject(new CommandFromServer(CommandFromServer.GETUSERS, usernames));
+                sendCommand(new CommandFromServer(CommandFromServer.GETUSERS, usernames));
             }else if(cfc.getCommand() == CommandFromClient.REMOVEUSER){
                 usernames.remove(cfc.getData());
                 os.writeObject(new CommandFromServer(CommandFromServer.GETUSERS, usernames));
@@ -32,6 +33,18 @@ public class ServerListener implements Runnable{
         }catch(Exception e)
         {
             e.printStackTrace();
+        }
+    }
+
+    public void sendCommand(CommandFromServer cfs)
+    {
+        // Sends command to both players
+        for (ObjectOutputStream o : outs) {
+            try {
+                o.writeObject(cfs);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 }
