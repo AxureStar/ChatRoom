@@ -4,7 +4,7 @@ import java.awt.*;
 public class UsernamePanel extends JPanel {
     public UsernamePanel(){
         this.setLayout(null);
-        this.setSize(1050,650);
+        this.setSize(200,200);
 
         JTextField username = new JTextField();
         username.setBounds(445,200, 230,30);
