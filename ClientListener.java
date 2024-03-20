@@ -32,7 +32,7 @@ public class ClientListener implements Runnable{
                 if(cfs.getCommand() == CommandFromServer.GETUSERS)//updates users
                 {
                     usernames = cfs.getUsernames();
-
+                    chatFrame.UpdateUsernames(usernames);
                     for(String a : usernames)
                     {
                         System.out.println(a);
