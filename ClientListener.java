@@ -35,13 +35,14 @@ public class ClientListener implements Runnable{
                     chatFrame.UpdateUsernames(usernames);
                     for(String a : usernames)
                     {
-                        System.out.println(a);
+                        System.out.println(a + usernames.size());
                     }
                 }
             }
         }
         catch(Exception e)
         {
+            System.out.println(usernames.size());
             e.printStackTrace();
         }
     }

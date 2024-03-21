@@ -6,12 +6,13 @@ import java.net.Socket;
 public class ServerMain {
     public static void main(String[] args){
         try{
-            ServerSocket ss = new ServerSocket(8015);
+            ServerSocket ss = new ServerSocket(8016);
             while(true){
                 Socket person = ss.accept();
                 ObjectOutputStream os = new ObjectOutputStream(person.getOutputStream());
                 ObjectInputStream is = new ObjectInputStream(person.getInputStream());
-                ServerListener serverListener = new ServerListener(is, os);
+                CommandFromClient cfs = (CommandFromClient) is.readObject();
+                ServerListener serverListener = new ServerListener(is, os, cfs.getData());
                 Thread a = new Thread(serverListener);
                 a.start();
             }
