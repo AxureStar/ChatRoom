@@ -48,6 +48,8 @@ public class Shizer extends JFrame {
             }
         });
 
+
+
         this.setVisible(true);
     }
 

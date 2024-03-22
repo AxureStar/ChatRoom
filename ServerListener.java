@@ -34,27 +34,6 @@ public class ServerListener implements Runnable{
                     sendCommand(new CommandFromServer(CommandFromServer.USERLEFT, cfc.getData()));
                 }
             }
-//            CommandFromClient cfc = (CommandFromClient) is.readObject();
-//            if(cfc.getCommand() == CommandFromClient.ADDUSER)
-//            {
-//                boolean alreadyHas = false;
-//                for(String name: usernames)
-//                {
-//                    if(name.equals(cfc.getData()))
-//                    {
-//                        alreadyHas = true;
-//                    }
-//                }
-//                if(!alreadyHas)
-//                {
-//                    usernames.add(cfc.getData());
-//                    System.out.println(cfc.getData() + " just joined so say hello mates.");
-//                    sendCommand(new CommandFromServer(CommandFromServer.GETUSERS, usernames));
-//                }
-//            }else if(cfc.getCommand() == CommandFromClient.REMOVEUSER){
-//                usernames.remove(cfc.getData());
-//                os.writeObject(new CommandFromServer(CommandFromServer.GETUSERS, usernames));
-//            }
         }catch(Exception e)
         {
             e.printStackTrace();

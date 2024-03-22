@@ -8,12 +8,12 @@ import java.util.ArrayList;
 public class ClientListener implements Runnable{
     private ObjectInputStream is = null;
     private ObjectOutputStream os = null;
-    private GUI chatFrame = null;
+    private Shizer chatFrame = null;
     ArrayList<String> usernames = new ArrayList<String>();
 
     public ClientListener(ObjectInputStream is,
                            ObjectOutputStream os,
-                           GUI frame) {
+                           Shizer frame) {
         this.is = is;
         this.os = os;
         this.chatFrame = frame;
