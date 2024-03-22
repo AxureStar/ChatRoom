@@ -11,15 +11,22 @@ public class ClientMain {
             ObjectInputStream is = new ObjectInputStream(socket.getInputStream());
             ObjectOutputStream os = new ObjectOutputStream(socket.getOutputStream());
 
-            GUI gui = new GUI();
-
-
             Scanner sc = new Scanner(System.in);
-            System.out.print("Enter Username - ");
-            String user = sc.nextLine();
+            boolean login = true;
+            while(login) {
+                System.out.print("Enter Username - ");
+                String user = sc.nextLine();
 
-            os.writeObject(new CommandFromClient(CommandFromClient.ADDUSER, user));
-            ClientListener cl = new ClientListener(is, os, gui);
+                os.writeObject(new CommandFromClient(CommandFromClient.ADDUSER, user));
+                CommandFromServer cfs = (CommandFromServer) is.readObject();
+                if (cfs.getCommand() == CommandFromServer.CONNECTED){
+                    login = false;
+                    break;
+                }
+                System.out.println("Already in Use, Another Username Please");
+            }
+
+            ClientListener cl = new ClientListener(is, os, null);
             Thread t = new Thread(cl);
             t.start();
         }catch (Exception e){

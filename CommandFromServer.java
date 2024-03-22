@@ -9,6 +9,9 @@ public class CommandFromServer implements Serializable {
     private ArrayList<String> usernames = new ArrayList<>();
     public static final int GETUSERS = 0;
     public static final int NEWMESSAGE = 1;
+    public static final int ALREADYINUSE = 2;
+    public static final int USERLEFT = 3;
+    public static final int CONNECTED = 4;
 
 
     public CommandFromServer(int command, ArrayList<String> arrayList) {

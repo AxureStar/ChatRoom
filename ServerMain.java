@@ -11,8 +11,7 @@ public class ServerMain {
                 Socket person = ss.accept();
                 ObjectOutputStream os = new ObjectOutputStream(person.getOutputStream());
                 ObjectInputStream is = new ObjectInputStream(person.getInputStream());
-                CommandFromClient cfs = (CommandFromClient) is.readObject();
-                ServerListener serverListener = new ServerListener(is, os, cfs.getData());
+                ServerListener serverListener = new ServerListener(is, os);
                 Thread a = new Thread(serverListener);
                 a.start();
             }

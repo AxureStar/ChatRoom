@@ -6,24 +6,33 @@ public class ServerListener implements Runnable{
 
     private ObjectInputStream is;
     private ObjectOutputStream os;
-    private static NameData nameData = new NameData();
     private static ArrayList<ObjectOutputStream> outs = new ArrayList<>();
     public static ArrayList<String> usernames = new ArrayList<>();
 
-    public ServerListener(ObjectInputStream is, ObjectOutputStream os, String user) {
+    public ServerListener(ObjectInputStream is, ObjectOutputStream os) {
         this.is = is;
         this.os = os;
         outs.add(os);
-        usernames.add(user);
     }
 
     @Override
     public void run() {
         try{
-            System.out.println(usernames.size());
             while(true){
-                sendCommand(new CommandFromServer(CommandFromServer.GETUSERS, usernames));
-                is.readObject();
+                CommandFromClient cfc = (CommandFromClient) is.readObject();
+                if (cfc.getCommand() == CommandFromClient.ADDUSER){
+                    if (usernames.contains(cfc.getData())){
+                        os.writeObject(new CommandFromServer(CommandFromServer.ALREADYINUSE, ""));
+                    }
+                    else{
+                        usernames.add(cfc.getData());
+                        sendCommand(new CommandFromServer(CommandFromServer.CONNECTED, cfc.getData()));
+                    }
+                }
+                if (cfc.getCommand() == CommandFromClient.REMOVEUSER){
+                    usernames.remove(cfc.getData());
+                    sendCommand(new CommandFromServer(CommandFromServer.USERLEFT, cfc.getData()));
+                }
             }
 //            CommandFromClient cfc = (CommandFromClient) is.readObject();
 //            if(cfc.getCommand() == CommandFromClient.ADDUSER)
