@@ -29,13 +29,16 @@ public class ClientListener implements Runnable{
             while(true)
             {
                 CommandFromServer cfs = (CommandFromServer)is.readObject();
-
+                System.out.println("Test 1");
                 if(cfs.getCommand() == CommandFromServer.GETUSERS)//updates users
                 {
+                    System.out.println("Test 12");
                     usernames.add(cfs.getData());
-//
+                    gui.updateNames(cfs.getData());
                 }
                 if (cfs.getCommand() == CommandFromServer.USERLEFT){
+                    System.out.println("Test 2");
+                    gui.updateNames(cfs.getData());
                     usernames.remove(cfs.getData());
                     System.out.println(usernames.size());
                 }
@@ -46,6 +49,10 @@ public class ClientListener implements Runnable{
             System.out.println(usernames.size());
             e.printStackTrace();
         }
+    }
+
+    public ArrayList<String> getUsernames(){
+        return usernames;
     }
 
 }

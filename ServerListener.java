@@ -25,8 +25,12 @@ public class ServerListener implements Runnable{
                         os.writeObject(new CommandFromServer(CommandFromServer.ALREADYINUSE, ""));
                     }
                     else{
+                        for(String SB: usernames){
+                            os.writeObject(new CommandFromServer(CommandFromServer.GETUSERS, SB));
+                        }
                         usernames.add(cfc.getData());
-                        sendCommand(new CommandFromServer(CommandFromServer.CONNECTED, cfc.getData()));
+                        os.writeObject(new CommandFromServer(CommandFromServer.CONNECTED, cfc.getData()));
+                        sendCommand(new CommandFromServer(CommandFromServer.GETUSERS, cfc.getData()));
                     }
                 }
                 if (cfc.getCommand() == CommandFromClient.REMOVEUSER){

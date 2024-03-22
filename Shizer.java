@@ -3,7 +3,10 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class Shizer extends JFrame {
-    ArrayList<String> con;
+
+   static ArrayList<String> usernames = new ArrayList<>();
+   static TextArea connections = new TextArea();
+
     public Shizer(){
         this.setLayout(null);
         this.setSize(1050,650);
@@ -21,7 +24,6 @@ public class Shizer extends JFrame {
 
         this.add(textBox);
         ScrollPane connectedList = new ScrollPane();
-        TextArea connections = new TextArea();
         connectedList.setBounds(760, 20, 250, 500);
         connectedList.add(connections);
 
@@ -61,7 +63,26 @@ public class Shizer extends JFrame {
         g.fillRect(770, 43, 268, 517);
     }
 
-    public static void updateNames(){
-
+    public static void updateNames(String name){
+        System.out.println("asd");
+        boolean removed = false;
+        for(String n: usernames)
+        {
+            if(n.equals(name))
+            {
+                usernames.remove(n);
+                removed = true;
+            }
+        }
+        if(!removed)
+        {
+            usernames.add(name);
+        }
+        String names = "";
+        for(String n: usernames)
+        {
+            names += n+"\n";
+        }
+        connections.setText(names);
     }
 }
