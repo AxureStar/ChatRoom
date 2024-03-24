@@ -1,6 +1,13 @@
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.ScrollPane;
+import java.awt.TextArea;
+import java.awt.TextField;
 import java.util.ArrayList;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
 
 public class Shizer extends JFrame {
 
@@ -46,7 +53,7 @@ public class Shizer extends JFrame {
 
         sendMessage.addActionListener(e -> {
             if (!messageBar.getText().isEmpty()){
-
+                //we need to pass in the message once enter is pressed to the server listener as a command
             }
         });
 

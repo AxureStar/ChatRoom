@@ -8,6 +8,7 @@ public class ServerListener implements Runnable{
     private ObjectOutputStream os;
     private static ArrayList<ObjectOutputStream> outs = new ArrayList<>();
     public static ArrayList<String> usernames = new ArrayList<>();
+    String messages = "";
 
     public ServerListener(ObjectInputStream is, ObjectOutputStream os) {
         this.is = is;
@@ -33,9 +34,13 @@ public class ServerListener implements Runnable{
                         sendCommand(new CommandFromServer(CommandFromServer.GETUSERS, cfc.getData()));
                     }
                 }
-                if (cfc.getCommand() == CommandFromClient.REMOVEUSER){
+                else if (cfc.getCommand() == CommandFromClient.REMOVEUSER){
                     usernames.remove(cfc.getData());
                     sendCommand(new CommandFromServer(CommandFromServer.USERLEFT, cfc.getData()));
+                }
+                else if (cfc.getCommand() == CommandFromClient.SENDMESSAGE){
+                    messages += cfc.getData() + "\n";
+                    //add which user sent it, then broadcast it to all
                 }
             }
         }catch(Exception e)
