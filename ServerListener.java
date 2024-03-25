@@ -7,7 +7,7 @@ public class ServerListener implements Runnable{
     private ObjectInputStream is;
     private ObjectOutputStream os;
     private static ArrayList<ObjectOutputStream> outs = new ArrayList<>();
-    public static ArrayList<String> usernames = new ArrayList<>();
+//    public static ArrayList<String> usernames = new ArrayList<>();
     String messages = "";
 
     public ServerListener(ObjectInputStream is, ObjectOutputStream os) {
@@ -19,6 +19,7 @@ public class ServerListener implements Runnable{
     @Override
     public void run() {
         try{
+            ArrayList<String> usernames = new ArrayList<>();
             while(true){
                 CommandFromClient cfc = (CommandFromClient) is.readObject();
                 if (cfc.getCommand() == CommandFromClient.ADDUSER){
@@ -26,8 +27,8 @@ public class ServerListener implements Runnable{
                         os.writeObject(new CommandFromServer(CommandFromServer.ALREADYINUSE, ""));
                     }
                     else{
-                        for(String SB: usernames){
-                            os.writeObject(new CommandFromServer(CommandFromServer.GETUSERS, SB));
+                        for (int i = 0; i < usernames.size(); i++){
+                            os.writeObject(new CommandFromServer(CommandFromServer.GETUSERS, (usernames.get(i))));
                         }
                         usernames.add(cfc.getData());
                         os.writeObject(new CommandFromServer(CommandFromServer.CONNECTED, cfc.getData()));
@@ -41,6 +42,7 @@ public class ServerListener implements Runnable{
                 else if (cfc.getCommand() == CommandFromClient.SENDMESSAGE){
                     messages += cfc.getData() + "\n";
                     //add which user sent it, then broadcast it to all
+                    sendCommand(new CommandFromServer(CommandFromServer.NEWMESSAGE, cfc.getData()));
                 }
             }
         }catch(Exception e)

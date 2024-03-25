@@ -23,7 +23,7 @@ public class ClientListener implements Runnable{
 
     @Override
     public void run() {
-        Shizer gui = new Shizer();
+        Shizer gui = new Shizer(this);
         try
         {
             while(true)
@@ -41,6 +41,8 @@ public class ClientListener implements Runnable{
                     gui.updateNames(cfs.getData());
                     usernames.remove(cfs.getData());
                     System.out.println(usernames.size());
+                }if(cfs.getCommand() == CommandFromServer.NEWMESSAGE){
+                    gui.updateMessage(cfs.getData());
                 }
             }
         }
@@ -53,6 +55,13 @@ public class ClientListener implements Runnable{
 
     public ArrayList<String> getUsernames(){
         return usernames;
+    }
+    public void sendMessage(String string){
+        try {
+            os.writeObject(new CommandFromClient(CommandFromClient.SENDMESSAGE, string));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
 }

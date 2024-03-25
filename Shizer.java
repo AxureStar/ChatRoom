@@ -13,8 +13,10 @@ public class Shizer extends JFrame {
 
    static ArrayList<String> usernames = new ArrayList<>();
    static TextArea connections = new TextArea();
+   static TextArea messages = new TextArea();
 
-    public Shizer(){
+
+    public Shizer(ClientListener clientListener){
         this.setLayout(null);
         this.setSize(1050,650);
         this.setTitle("ChatRoom");
@@ -22,7 +24,6 @@ public class Shizer extends JFrame {
 
 
         ScrollPane textBox = new ScrollPane();
-        TextArea messages = new TextArea();
         textBox.setBounds(20, 20, 700, 500);
         textBox.add(messages);
 
@@ -54,6 +55,8 @@ public class Shizer extends JFrame {
         sendMessage.addActionListener(e -> {
             if (!messageBar.getText().isEmpty()){
                 //we need to pass in the message once enter is pressed to the server listener as a command
+                clientListener.sendMessage(messageBar.getText());
+                messageBar.setText("");
             }
         });
 
@@ -91,5 +94,8 @@ public class Shizer extends JFrame {
             names += n+"\n";
         }
         connections.setText(names);
+    }
+    public static void updateMessage(String string){
+        messages.setText(messages.getText() + "\n" + string);
     }
 }
