@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 public class ClientMain {
     public static void main(String[] args){
+        String user = "";
         try{
             Socket socket = new Socket("127.0.0.1", 8016);
             ObjectInputStream is = new ObjectInputStream(socket.getInputStream());
@@ -14,7 +15,7 @@ public class ClientMain {
             boolean login = true;
             while(login) {
                 System.out.print("Enter Username - ");
-                String user = sc.nextLine();
+                user = sc.nextLine();
 
                 os.writeObject(new CommandFromClient(CommandFromClient.ADDUSER, user));
                 CommandFromServer cfs = (CommandFromServer) is.readObject();
@@ -25,7 +26,7 @@ public class ClientMain {
                 System.out.println("Already in Use, Another Username Please");
             }
 
-            ClientListener cl = new ClientListener(is, os, null);
+            ClientListener cl = new ClientListener(is, os, null, user);
             Thread t = new Thread(cl);
             t.start();
         }catch (Exception e){

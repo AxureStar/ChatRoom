@@ -10,13 +10,15 @@ public class ClientListener implements Runnable{
     private ObjectOutputStream os = null;
     private Shizer chatFrame = null;
     ArrayList<String> usernames = new ArrayList<String>();
+    String username;
 
     public ClientListener(ObjectInputStream is,
                            ObjectOutputStream os,
-                           Shizer frame) {
+                           Shizer frame, String user) {
         this.is = is;
         this.os = os;
         this.chatFrame = frame;
+        username = user;
 
     }
 
@@ -58,7 +60,7 @@ public class ClientListener implements Runnable{
     }
     public void sendMessage(String string){
         try {
-            os.writeObject(new CommandFromClient(CommandFromClient.SENDMESSAGE, string));
+            os.writeObject(new CommandFromClient(CommandFromClient.SENDMESSAGE, username + string));
         }catch (Exception e){
             e.printStackTrace();
         }
