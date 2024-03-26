@@ -38,6 +38,7 @@ public class ServerListener implements Runnable{
                 else if (cfc.getCommand() == CommandFromClient.REMOVEUSER){
                     usernames.remove(cfc.getData());
                     sendCommand(new CommandFromServer(CommandFromServer.USERLEFT, cfc.getData()));
+                    sendCommand(new CommandFromServer(CommandFromServer.GETUSERS, cfc.getData()));
                 }
                 else if (cfc.getCommand() == CommandFromClient.SENDMESSAGE){
                     messages += cfc.getData() + "\n";

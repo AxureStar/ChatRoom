@@ -60,8 +60,17 @@ public class ClientListener implements Runnable{
     }
     public void sendMessage(String string){
         try {
-            os.writeObject(new CommandFromClient(CommandFromClient.SENDMESSAGE, username + string));
+            os.writeObject(new CommandFromClient(CommandFromClient.SENDMESSAGE, username + ": " + string));
         }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void disconnect(){
+        try{
+            os.writeObject(new CommandFromClient(CommandFromClient.REMOVEUSER, username));
+        }catch(Exception e)
+        {
             e.printStackTrace();
         }
     }

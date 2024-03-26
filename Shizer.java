@@ -4,6 +4,8 @@ import java.awt.Graphics;
 import java.awt.ScrollPane;
 import java.awt.TextArea;
 import java.awt.TextField;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -51,6 +53,50 @@ public class Shizer extends JFrame {
         sendMessage.setFocusable(false);
         sendMessage.setText("Send");
         this.add(sendMessage);
+        sendMessage.setVisible(true);
+
+        JButton quitButton = new JButton();
+        quitButton.setBounds(750, 550, 80, 30);
+        quitButton.setText("Quit");
+        this.add(quitButton);
+        quitButton.setVisible(true);
+        WindowListener wL = new WindowListener() {
+            @Override
+            public void windowOpened(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+                clientListener.disconnect();
+            }
+
+            @Override
+            public void windowClosed(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowIconified(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowDeiconified(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowActivated(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowDeactivated(WindowEvent e) {
+
+            }
+        };
+        addWindowListener(wL);
 
         sendMessage.addActionListener(e -> {
             if (!messageBar.getText().isEmpty()){
@@ -60,6 +106,10 @@ public class Shizer extends JFrame {
             }
         });
 
+        quitButton.addActionListener(e -> {
+            clientListener.disconnect();
+            System.exit(0);
+        });
 
 
         this.setVisible(true);
